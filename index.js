@@ -23,7 +23,6 @@ for (const folder of commandFolders) {
 	}
 };
 
-
 /*
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
@@ -41,22 +40,22 @@ for (const file of eventFiles) {
 
 */
 
-
-
 client.once(Events.ClientReady, () => {
-	console.log('Ready!');
+	console.log(`Logged in as ${client.user.tag}`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-	console.log(interaction);
+
 	if (!interaction.isChatInputCommand()){ 
 		return;
 	};
 
 	const command = client.commands.get(interaction.commandName);
-	console.log(interaction.commandName);
 
-	if (!command) return;
+	if (!command) {
+		console.error(`No command matching ${interaction.commandName} was found.`);
+		return;
+	}
 
 	try {
 		await command.execute(interaction);
@@ -69,54 +68,29 @@ client.on(Events.InteractionCreate, async interaction => {
 		}
 	}
 });
-/*
+
+
 client.on(Events.MessageCreate, async msg => {
+	console.log(msg);
+	
 	if (msg.author.bot){ 
 		return;
 	};
 	const prefix = "/";
+	
 	if (!msg.content.startsWith(prefix)){
 		return;
 	};
+
 	const [commandName, ...args] = msg.content
 		.trim()
 		.substring(prefix.length)
 		.split(/\s+/);
 
-	const command = client.commands.get(commandName);
+	//const command = client.commands.get(commandName);
+	msg.reply(`No command matching /${commandName} was found.`);
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-			console.error(`Error executing ${commandName}`);
-			console.error(error);
-	}
 });
 
-/*
-client.on("ready", () => {
-	console.log(`Logged in as ${client.user.tag}!`)
-});
-  
-client.on(Events.MessageCreate, async msg => {
-  	console.log(msg.content);
-	const prefix = "$";
-	if (msg.author.bot) return;
-	if (!msg.content.startsWith(prefix)){     
-		return;
-	};
-  
-	const [command, ...args] = msg.content
-		.trim()
-		.substring(prefix.length)
-		.split(/\s+/);
-  
-	console.log(command);
-	if (command === 'ping') {
-		msg.reply(`pong`);
-	};	  
-  
-});
-*/
 
 client.login(token);
