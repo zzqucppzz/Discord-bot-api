@@ -4,7 +4,6 @@ module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()){ 
-			//console.error(`No command matching ${interaction.commandName} was found.`);
 			return;
 		}
 

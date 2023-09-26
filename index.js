@@ -23,14 +23,13 @@ for (const folder of commandFolders) {
 	}
 };
 
-/*
+
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
 	const filePath = path.join(eventsPath, file);
 	const event = require(filePath);
-	console.log(event);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
@@ -38,8 +37,8 @@ for (const file of eventFiles) {
 	}
 };
 
-*/
 
+/*
 client.once(Events.ClientReady, () => {
 	console.log(`Logged in as ${client.user.tag}`);
 });
@@ -71,8 +70,6 @@ client.on(Events.InteractionCreate, async interaction => {
 
 
 client.on(Events.MessageCreate, async msg => {
-	console.log(msg);
-	
 	if (msg.author.bot){ 
 		return;
 	};
@@ -92,5 +89,6 @@ client.on(Events.MessageCreate, async msg => {
 
 });
 
+*/
 
 client.login(token);
