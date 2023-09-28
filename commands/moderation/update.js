@@ -33,6 +33,7 @@ module.exports = {
         const email = interaction.options.getString('email');
         const user_type = interaction.options.getString('user_type');
 
+        console.log(username);
         if (username){
             console.log(1);
             await student.updateOne({username: `${id}`},{username: username});

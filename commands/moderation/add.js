@@ -4,7 +4,7 @@ const student = require('../../config/models/Student')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('add')
-		.setDescription('Display all members')
+		.setDescription('Add member')
         .addStringOption(option =>
             option
             .setName('username')
