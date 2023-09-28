@@ -5,6 +5,9 @@ const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
+const db = require('./config/db');
+db.connect();
+
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
@@ -36,59 +39,5 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 };
-
-
-/*
-client.once(Events.ClientReady, () => {
-	console.log(`Logged in as ${client.user.tag}`);
-});
-
-client.on(Events.InteractionCreate, async interaction => {
-
-	if (!interaction.isChatInputCommand()){ 
-		return;
-	};
-
-	const command = client.commands.get(interaction.commandName);
-
-	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
-		return;
-	}
-
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-		} else {
-			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
-	}
-});
-
-
-client.on(Events.MessageCreate, async msg => {
-	if (msg.author.bot){ 
-		return;
-	};
-	const prefix = "/";
-	
-	if (!msg.content.startsWith(prefix)){
-		return;
-	};
-
-	const [commandName, ...args] = msg.content
-		.trim()
-		.substring(prefix.length)
-		.split(/\s+/);
-
-	//const command = client.commands.get(commandName);
-	msg.reply(`No command matching /${commandName} was found.`);
-
-});
-
-*/
 
 client.login(token);
