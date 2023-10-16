@@ -28,23 +28,35 @@ module.exports = {
             .setDescription('update email')),
     async execute(interaction) {
         const id = interaction.options.getString('id');
-        const username = interaction.options.getString('username');
+        const username = interaction.options.getString('name');
         const age = interaction.options.getNumber('age');
         const email = interaction.options.getString('email');
         const user_type = interaction.options.getString('user_type');
 
-        console.log(username);
-        if (username){
-            console.log(1);
-            await student.updateOne({username: `${id}`},{username: username});
+        if (username || age || email || user_type){
+            if (id){
+                if (username){
+                    await student.updateOne({_id: id},{username: username});
+                }
+                if (age){
+                    await student.updateOne({_id: id},{age: age});
+                }
+                if (email){
+                    await student.updateOne({_id: id},{email: email});
+                }
+                if (user_type){
+                    await student.updateOne({_id: id},{user_type: user_type});
+                }
+                await interaction.reply(`Update member to MongoDB successful`);
+                return;
+            }
+            else {
+                await interaction.reply(`Update failure`);
+            }
         }
-        if (age)
-            await student.updateOne({_id: `${id}`},{age: age});
-        if (email)
-            await student.updateOne({_id: `${id}`},{email: email});
-        if (user_type)
-            await student.updateOne({_id: `${id}`},{user_type: user_type});
+        else {
+            await interaction.reply(`There are no update`);
+        }
 
-        await interaction.reply(`Update member to MongoDB successful`);
     },
 };
